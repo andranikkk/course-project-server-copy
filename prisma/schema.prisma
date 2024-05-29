@@ -1,0 +1,80 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String       @id @default(uuid()) @map("_id")
+  email       String       @unique
+  password    String
+  name        String?
+  imageUrl    String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  collections Collection[]
+  likes       Like[]
+  comments    Comment[]
+  Items       Item[]
+}
+
+model Collection {
+  id          String   @id @default(uuid()) @map("_id")
+  name        String
+  description String
+  categoryId  String
+  createdAt   DateTime @default(now())
+  content     String?
+  imageUrl    String?
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  items       Item[]
+}
+
+model Item {
+  id                   String     @id @default(uuid()) @map("_id")
+  name                 String     @default("")
+  tags                 String     @default("")
+  collection           Collection @relation(fields: [collectionId], references: [id])
+  collectionId         String
+  categoryId           String
+  createdAt            DateTime   @default(now())
+  content              String
+  user                 User       @relation(fields: [userId], references: [id])
+  userId               String
+  custom_string1_state Boolean?
+  custom_string1_name  String?
+  custom_string2_state Boolean?
+  custom_string2_name  String?
+  custom_string3_state Boolean?
+  custom_string3_name  String?
+  custom_int1_state    Boolean?
+  custom_int1_name     String?
+  custom_int2_state    Boolean?
+  custom_int2_name     String?
+  custom_int3_state    Boolean?
+  custom_int3_name     String?
+  Like                 Like[]
+  Comment              Comment[]
+}
+
+model Like {
+  id     String @id @default(uuid()) @map("_id")
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+  item   Item   @relation(fields: [itemId], references: [id])
+  itemId String
+}
+
+model Comment {
+  id      String @id @default(uuid()) @map("_id")
+  content String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  item    Item   @relation(fields: [itemId], references: [id])
+  itemId  String
+}
