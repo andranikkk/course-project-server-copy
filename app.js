@@ -28,10 +28,6 @@ if (!fs.existsSync("uploads")) {
   fs.mkdirSync("uploads");
 }
 
-app.get("/", (req, res) => {
-  res.send(req.t("welcome"));
-});
-
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
