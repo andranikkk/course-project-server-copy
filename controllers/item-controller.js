@@ -115,7 +115,7 @@ const ItemController = {
       custom_int3_name,
     } = req.body;
 
-    const item = await prisma.item.findUnique({ where: id });
+    const item = await prisma.item.findUnique({ where: { id } });
 
     if (item?.userId !== req.user?.userId) {
       return res.status(403).json({ error: "No permission" });
@@ -123,9 +123,8 @@ const ItemController = {
 
     try {
       const updatedItem = await prisma.item.update({
-        where: id,
+        where: { id },
         data: {
-          id: id,
           name: name || undefined,
           tags: tags || undefined,
           categoryId: categoryId || undefined,

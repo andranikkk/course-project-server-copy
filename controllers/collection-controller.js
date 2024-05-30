@@ -89,7 +89,7 @@ const CollectionController = {
 
   editCollection: async (req, res) => {
     const { name, description, categoryId, id } = req.body;
-    const collection = await prisma.collection.findUnique({ where: id });
+    const collection = await prisma.collection.findUnique({ where: { id } });
     const userId = req.user?.userId;
 
     if (collection?.authorId !== userId) {
@@ -98,9 +98,8 @@ const CollectionController = {
 
     try {
       const updatedCollection = await prisma.collection.update({
-        where: id,
+        where: { id },
         data: {
-          id: id,
           name: name || undefined,
           description: description || undefined,
           categoryId: categoryId || undefined,
