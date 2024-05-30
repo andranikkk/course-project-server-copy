@@ -66,7 +66,7 @@ const UserController = {
         return res.status(400).json({ message: "Invalid email or password" });
       }
 
-      const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY);
+      const token = jwt.sign({ userId: user.id }, `${process.env.SECRET_KEY}`);
 
       res.json({ token });
     } catch (error) {

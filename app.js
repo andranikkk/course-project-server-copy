@@ -1,11 +1,11 @@
 const createError = require("http-errors");
 const express = require("express");
+require("dotenv").config();
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const fs = require("fs");
 const cors = require("cors");
-require("dotenv").config();
 const i18n = require("./i18n");
 
 const app = express();
